@@ -659,7 +659,11 @@ dependencies = [
 
 [[package]]
 name = "rustlings"
+<<<<<<< Updated upstream
 version = "4.3.0"
+=======
+version = "4.0.0"
+>>>>>>> Stashed changes
 dependencies = [
  "assert_cmd",
  "clap",

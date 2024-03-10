@@ -11,8 +11,6 @@ struct Color {
     blue: u8,
 }
 
-// I AM NOT DONE
-
 // Your task is to complete this implementation
 // and return an Ok result of inner type Color.
 // You need to create an implementation for a tuple of three integers,
@@ -25,19 +23,60 @@ struct Color {
 // Tuple implementation
 impl TryFrom<(i16, i16, i16)> for Color {
     type Error = String;
-    fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {}
+
+    fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {
+        let arr: [i16; 3] = [tuple.0, tuple.1, tuple.2];
+        let is_u8 = arr.iter().all(|x| x >= &0 && x < &256);
+        if is_u8 {
+            Ok(Color {
+                red: arr[0] as u8,
+                green: arr[1] as u8,
+                blue: arr[2] as u8,
+            })
+        } else {
+            Err(String::from("Overflow"))
+        }
+    }
 }
 
 // Array implementation
 impl TryFrom<[i16; 3]> for Color {
     type Error = String;
-    fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {}
+
+    fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {
+        let is_u8 = arr.iter().all(|x| x >= &0 && x < &256);
+        if is_u8 {
+            Ok(Color {
+                red: arr[0] as u8,
+                green: arr[1] as u8,
+                blue: arr[2] as u8,
+            })
+        } else {
+            Err(String::from("Overflow"))
+        }
+    }
 }
 
 // Slice implementation
 impl TryFrom<&[i16]> for Color {
     type Error = String;
-    fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {}
+
+    fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {
+        if slice.len() != 3 {
+            Err(String::from("incorrect length for slice"))
+        } else {
+            let is_u8 = slice.iter().all(|x| x >= &0 && x < &256);
+            if is_u8 {
+                Ok(Color {
+                    red: slice[0] as u8,
+                    green: slice[1] as u8,
+                    blue: slice[2] as u8,
+                })
+            } else {
+                Err(String::from("Overflow"))
+            }
+        }
+    }
 }
 
 fn main() {
